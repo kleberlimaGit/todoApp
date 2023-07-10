@@ -55,4 +55,9 @@ export const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  imgEmpty: {
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:20,
+  }
 });

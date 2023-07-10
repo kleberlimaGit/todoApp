@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  FlatList,
 } from "react-native";
 import { useState } from "react";
 
@@ -92,25 +93,23 @@ export default function Home() {
             taskCreated={tasks.length}
             taskDone={tasks.filter((t) => t.isDone).length}
           />
-          {tasks.length > 0 ? (
-            <ScrollView
+
+            <FlatList data={tasks} keyExtractor={(_item, index) => String(index)} style={styles.scroll}
+              renderItem={({item , index}) => (
+                <Task
+                task={item}
+                key={index}
+                onToggle={() => toggleTask(index)}
+                onRemove={() => handleRemoveTask(index)}
+              />
+              )}
               showsVerticalScrollIndicator={false}
-              style={styles.scroll}
-            >
-              {tasks.sort((a:Tasks, b:Tasks) => booleanToNumber(a.isDone) - booleanToNumber(b.isDone)).map((task, index) => {
-                return (
-                  <Task
-                    task={task}
-                    key={index}
-                    onToggle={() => toggleTask(index)}
-                    onRemove={() => handleRemoveTask(index)}
-                  />
-                );
-              })}
-            </ScrollView>
-          ) : (
-            <Image source={require("../../assets/Empty.png")} />
-          )}
+              ListEmptyComponent={() => (
+                <View style={styles.imgEmpty}>
+                  <Image source={require("../../assets/Empty.png")}/>
+                </View>
+              )}
+            />
         </View>
         {/* --------------------- FINAL SCROLL ------------------------- */}
       </View>
