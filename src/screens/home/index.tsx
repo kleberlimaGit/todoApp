@@ -20,14 +20,16 @@ export default function Home() {
   const [taskName, setTaskName] = useState("");
 
   function addTask() {
-    if (tasks.filter((task) => !task.isDone).length >= 10) {
-      return Alert.alert(
-        "Alerta!",
-        "Suas atividades estão cheias, finalize alguma, ou delete para cadastrar novas."
-      );
+    if(taskName.length>0){
+      if (tasks.filter((task) => !task.isDone).length >= 10) {
+        return Alert.alert(
+          "Alerta!",
+          "Suas atividades estão cheias, finalize alguma, ou delete para cadastrar novas."
+        );
+      }
+      setTasks((state) => [...state, { task: taskName, isDone: false }]);
+      setTaskName("");
     }
-    setTasks((state) => [...state, { task: taskName, isDone: false }]);
-    setTaskName("");
   }
 
   function toggleTask(index: number) {
